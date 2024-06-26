@@ -2,6 +2,7 @@ package com.farmacia.medica.medicaCosmo.entities;
 
 import java.util.Objects;
 
+import com.farmacia.medica.medicaCosmo.DTOs.MedicamentoDTO;
 import com.farmacia.medica.medicaCosmo.entities.enums.Laboratorio;
 import com.farmacia.medica.medicaCosmo.entities.enums.Via;
 
@@ -14,12 +15,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_medicamento")
+@Table(name = "remedio")
 public class Medicamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
@@ -28,6 +30,8 @@ public class Medicamento {
 	private String lote;
 	private Integer quantidade;
 
+	private String validade;
+
 	@Enumerated(EnumType.STRING)
 	private Laboratorio laboratorio;
 
@@ -35,13 +39,25 @@ public class Medicamento {
 
 	}
 
-	public Medicamento(String nome, Via via, String lote, Integer quantidade, Laboratorio laboratorio) {
+	public Medicamento(String nome, Via via, String lote, Integer quantidade, String validade,
+			Laboratorio laboratorio) {
 
 		this.nome = nome;
 		this.via = via;
 		this.lote = lote;
 		this.quantidade = quantidade;
 		this.laboratorio = laboratorio;
+		this.validade = validade;
+	}
+
+	// construtor com dados do DTO
+	public Medicamento(MedicamentoDTO dadosMedicamento) {
+		this.nome = dadosMedicamento.nome();
+		this.via = dadosMedicamento.via();
+		this.lote = dadosMedicamento.lote();
+		this.quantidade = dadosMedicamento.quantidade();
+		this.validade = dadosMedicamento.validade();
+		this.laboratorio = dadosMedicamento.laboratorio();
 	}
 
 	public Long getId() {
@@ -82,6 +98,14 @@ public class Medicamento {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public String getValidade() {
+		return validade;
+	}
+
+	public void setValidade(String validade) {
+		this.validade = validade;
 	}
 
 	public Laboratorio getLaboratorio() {

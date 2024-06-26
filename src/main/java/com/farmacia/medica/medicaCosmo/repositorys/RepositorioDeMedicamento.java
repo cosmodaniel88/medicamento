@@ -1,5 +1,9 @@
 package com.farmacia.medica.medicaCosmo.repositorys;
 
-public class RepositorioDeMedicamento {
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.farmacia.medica.medicaCosmo.entities.Medicamento;
+
+public interface RepositorioDeMedicamento extends JpaRepository<Medicamento, Long>{
+	
 }
