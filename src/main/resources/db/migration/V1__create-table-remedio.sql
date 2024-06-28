@@ -4,7 +4,7 @@ create table remedio(
 	nome varchar(100) not null,
 	via varchar (100),
 	lote varchar(100) not null,
-	quantidade varchar(100),
+	quantidade int,
 	validade varchar(100) not null,
 	laboratorio varchar (100),
 	

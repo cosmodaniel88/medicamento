@@ -1,8 +1,10 @@
 package com.farmacia.medica.medicaCosmo.entities;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.farmacia.medica.medicaCosmo.DTOs.MedicamentoDTO;
+import com.farmacia.medica.medicaCosmo.DTOs.UpdateDTO;
 import com.farmacia.medica.medicaCosmo.entities.enums.Laboratorio;
 import com.farmacia.medica.medicaCosmo.entities.enums.Via;
 
@@ -28,9 +30,9 @@ public class Medicamento {
 	private Via via;
 
 	private String lote;
-	private Integer quantidade;
+	private int quantidade;
 
-	private String validade;
+	private LocalDate validade;
 
 	@Enumerated(EnumType.STRING)
 	private Laboratorio laboratorio;
@@ -39,7 +41,7 @@ public class Medicamento {
 
 	}
 
-	public Medicamento(String nome, Via via, String lote, Integer quantidade, String validade,
+	public Medicamento(String nome, Via via, String lote, int quantidade, LocalDate validade,
 			Laboratorio laboratorio) {
 
 		this.nome = nome;
@@ -92,19 +94,19 @@ public class Medicamento {
 		this.lote = lote;
 	}
 
-	public Integer getQuantidade() {
+	public int getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(Integer quantidade) {
+	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
-	public String getValidade() {
+	public LocalDate getValidade() {
 		return validade;
 	}
 
-	public void setValidade(String validade) {
+	public void setValidade(LocalDate validade) {
 		this.validade = validade;
 	}
 
@@ -131,6 +133,22 @@ public class Medicamento {
 			return false;
 		Medicamento other = (Medicamento) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public void atualizarInformacoes(UpdateDTO dados) {
+		
+		if(dados.nome() != null) {
+			this.nome = dados.nome();
+		}
+		
+		if(dados.via() != null) {
+			this.nome = dados.nome();
+		}
+		
+		if(dados.laboratorio() != null) {
+			this.laboratorio = dados.laboratorio();
+		}
+		
 	}
 
 }
