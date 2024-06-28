@@ -3,7 +3,6 @@ package com.farmacia.medica.medicaCosmo.DTOs;
 import com.farmacia.medica.medicaCosmo.entities.enums.Laboratorio;
 import com.farmacia.medica.medicaCosmo.entities.enums.Via;
 
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 
 public record UpdateDTO(

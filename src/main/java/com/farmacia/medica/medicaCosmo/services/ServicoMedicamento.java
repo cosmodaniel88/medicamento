@@ -31,4 +31,8 @@ public class ServicoMedicamento {
 		medicamento.atualizarInformacoes(dados);
 		
 	}
+	
+	public void deletar(Long id) {
+		repMedicamento.deleteById(id);
+	}
 }
