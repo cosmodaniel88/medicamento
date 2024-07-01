@@ -51,4 +51,11 @@ public class ControllerMedicamento {
 	public void deletar(@PathVariable Long id) {
 		servMedicamento.deletar(id);
 	}
+	
+	@DeleteMapping("inativar/{id}")
+	@Transactional //isso aqui elimna a necessidade do reposotory.save
+	public void inativar(@PathVariable Long id) {
+		var med = servMedicamento.buscarPorId(id);
+		med.inativar();
+	}
 }

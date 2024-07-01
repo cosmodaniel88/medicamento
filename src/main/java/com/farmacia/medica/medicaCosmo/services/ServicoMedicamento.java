@@ -21,7 +21,7 @@ public class ServicoMedicamento {
 	}
 	
 	public List<Medicamento> listarTodos(){
-		return repMedicamento.findAll();
+		return repMedicamento.findAllByAtivoTrue();
 	}
 	
 	public void atualizar(UpdateDTO dados) {
@@ -35,4 +35,9 @@ public class ServicoMedicamento {
 	public void deletar(Long id) {
 		repMedicamento.deleteById(id);
 	}
+	
+	public Medicamento buscarPorId(Long id) {
+		return repMedicamento.getReferenceById(id);
+	}
+	
 }

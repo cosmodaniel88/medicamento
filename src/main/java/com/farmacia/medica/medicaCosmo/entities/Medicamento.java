@@ -37,6 +37,8 @@ public class Medicamento {
 	@Enumerated(EnumType.STRING)
 	private Laboratorio laboratorio;
 
+	private Boolean ativo;
+	
 	public Medicamento() {
 
 	}
@@ -50,6 +52,8 @@ public class Medicamento {
 		this.quantidade = quantidade;
 		this.laboratorio = laboratorio;
 		this.validade = validade;
+		//o medicamento, assim que cadastrado, já terá o valor ativo como true
+		this.ativo = true;
 	}
 
 	// construtor com dados do DTO
@@ -148,6 +152,11 @@ public class Medicamento {
 		if(dados.laboratorio() != null) {
 			this.laboratorio = dados.laboratorio();
 		}
+		
+	}
+
+	public void inativar() {
+		this.ativo = false;
 		
 	}
 
