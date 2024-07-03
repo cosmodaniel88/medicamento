@@ -40,4 +40,8 @@ public class ServicoMedicamento {
 		return repMedicamento.getReferenceById(id);
 	}
 	
+	public void inativarRegistro(Long id) {
+		var med = buscarPorId(id);
+		med.inativar();
+	}
 }

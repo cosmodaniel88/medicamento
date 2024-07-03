@@ -53,7 +53,7 @@ public class Medicamento {
 		this.laboratorio = laboratorio;
 		this.validade = validade;
 		//o medicamento, assim que cadastrado, já terá o valor ativo como true
-		this.ativo = true;
+		this.setAtivo(true);
 	}
 
 	// construtor com dados do DTO
@@ -156,8 +156,16 @@ public class Medicamento {
 	}
 
 	public void inativar() {
-		this.ativo = false;
+		this.setAtivo(false);
 		
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }
