@@ -44,4 +44,9 @@ public class ServicoMedicamento {
 		var med = buscarPorId(id);
 		med.inativar();
 	}
+	
+	public void ativarRegistro(Long id) {
+		var med = buscarPorId(id);
+		med.ativar();
+	}
 }

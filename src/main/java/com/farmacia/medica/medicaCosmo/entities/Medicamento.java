@@ -38,13 +38,12 @@ public class Medicamento {
 	private Laboratorio laboratorio;
 
 	private Boolean ativo;
-	
+
 	public Medicamento() {
 
 	}
 
-	public Medicamento(String nome, Via via, String lote, int quantidade, LocalDate validade,
-			Laboratorio laboratorio) {
+	public Medicamento(String nome, Via via, String lote, int quantidade, LocalDate validade, Laboratorio laboratorio) {
 
 		this.nome = nome;
 		this.via = via;
@@ -52,7 +51,7 @@ public class Medicamento {
 		this.quantidade = quantidade;
 		this.laboratorio = laboratorio;
 		this.validade = validade;
-		//o medicamento, assim que cadastrado, já terá o valor ativo como true
+		// o medicamento, assim que cadastrado, já terá o valor ativo como true
 		this.setAtivo(true);
 	}
 
@@ -140,24 +139,30 @@ public class Medicamento {
 	}
 
 	public void atualizarInformacoes(UpdateDTO dados) {
-		
-		if(dados.nome() != null) {
+
+		if (dados.nome() != null) {
 			this.nome = dados.nome();
 		}
-		
-		if(dados.via() != null) {
+
+		if (dados.via() != null) {
 			this.nome = dados.nome();
 		}
-		
-		if(dados.laboratorio() != null) {
+
+		if (dados.laboratorio() != null) {
 			this.laboratorio = dados.laboratorio();
 		}
-		
+
 	}
 
 	public void inativar() {
 		this.setAtivo(false);
-		
+
+	}
+
+	public void ativar() {
+
+		this.setAtivo(true);
+
 	}
 
 	public Boolean getAtivo() {

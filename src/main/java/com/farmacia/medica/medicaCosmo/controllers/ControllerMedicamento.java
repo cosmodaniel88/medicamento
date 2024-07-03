@@ -57,4 +57,9 @@ public class ControllerMedicamento {
 	public void inativar(@PathVariable Long id) {
 		servMedicamento.inativarRegistro(id);
 	}
+	@PutMapping("ativar/{id}")
+	@Transactional
+	public void ativar(@PathVariable Long id) {
+		servMedicamento.ativarRegistro(id);
+	}
 }
