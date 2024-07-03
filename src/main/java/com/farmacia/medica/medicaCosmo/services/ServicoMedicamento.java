@@ -24,11 +24,13 @@ public class ServicoMedicamento {
 		return repMedicamento.findAllByAtivoTrue();
 	}
 	
-	public void atualizar(UpdateDTO dados) {
+	public Medicamento atualizar(UpdateDTO dados) {
 		
 		var medicamento = repMedicamento.getReferenceById(dados.id());
 		
 		medicamento.atualizarInformacoes(dados);
+		
+		return medicamento;
 		
 	}
 	

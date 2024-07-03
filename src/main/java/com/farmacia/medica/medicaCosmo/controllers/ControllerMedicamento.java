@@ -3,6 +3,7 @@ package com.farmacia.medica.medicaCosmo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farmacia.medica.medicaCosmo.DTOs.DadosAtualizacaoDTO;
 import com.farmacia.medica.medicaCosmo.DTOs.ListagemMedicamentosDTO;
 import com.farmacia.medica.medicaCosmo.DTOs.MedicamentoDTO;
 import com.farmacia.medica.medicaCosmo.DTOs.UpdateDTO;
@@ -30,36 +32,54 @@ public class ControllerMedicamento {
 	//método para cadastrar medicamentos
 	@PostMapping
 	@Transactional //faz o rollback em caso de erros
-	public void cadastrar(@RequestBody @Valid MedicamentoDTO dados) {
+	public ResponseEntity<Void> cadastrar(@RequestBody @Valid MedicamentoDTO dados) {
 		servMedicamento.cadastrarMedicamento(dados);
 		
 	}
 	/* */
 	@GetMapping
-	public List<ListagemMedicamentosDTO> listarTodos(){
-		return servMedicamento.listarTodos().stream().map(ListagemMedicamentosDTO::new).toList();
-	}
+	public ResponseEntity< List<ListagemMedicamentosDTO>> listarTodos(){
+		var lista = servMedicamento.listarTodos().stream().map(ListagemMedicamentosDTO::new).toList();
+			
+		return ResponseEntity.ok(lista);
+		
+		}
 	
 	@PutMapping //método para dar update
 	@Transactional //for roll back
-	public void atualizar(@RequestBody @Valid UpdateDTO dados) {
-		servMedicamento.atualizar(dados);
+	public ResponseEntity<DadosAtualizacaoDTO> atualizar(@RequestBody @Valid UpdateDTO dados) {
+		var medicamento = servMedicamento.atualizar(dados);
+		
+		return ResponseEntity.ok(new DadosAtualizacaoDTO(medicamento));
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public void deletar(@PathVariable Long id) {
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		servMedicamento.deletar(id);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping("inativar/{id}")
 	@Transactional //isso aqui elimna a necessidade do reposotory.save
-	public void inativar(@PathVariable Long id) {
+	public  ResponseEntity<Void> inativar(@PathVariable Long id) {
 		servMedicamento.inativarRegistro(id);
+		
+		//O ResponseEntity é utilizado para retornar um código http.
+		/*
+		 * Por padrão, o retorno, sem o reponse entity, é 200 ok e 404 e 500 erro interno no servidor
+		 * Todavia, com esse método, nós podemos escolher o código retornado*/
+			
+		return ResponseEntity.noContent().build(); /*204 - No cotent - quando um registro é deletado*/
+		
+		
 	}
 	@PutMapping("ativar/{id}")
 	@Transactional
-	public void ativar(@PathVariable Long id) {
+	public ResponseEntity<Void> ativar(@PathVariable Long id) {
 		servMedicamento.ativarRegistro(id);
+		
+		return ResponseEntity.noContent().build();
 	}
 }
