@@ -49,6 +49,12 @@ public class ControllerMedicamento {
 		return ResponseEntity.ok(lista);
 		
 		}
+	@GetMapping("/{id}")
+	public ResponseEntity<DadosAtualizacaoDTO> buscarPorId(@PathVariable Long id){
+		var medicamento  = servMedicamento.buscarPorId(id);
+		
+		return ResponseEntity.ok(new DadosAtualizacaoDTO(medicamento));
+	}
 	
 	@PutMapping //método para dar update
 	@Transactional //for roll back
