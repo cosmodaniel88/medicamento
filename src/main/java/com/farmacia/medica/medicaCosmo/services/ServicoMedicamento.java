@@ -16,8 +16,11 @@ public class ServicoMedicamento {
 	@Autowired
 	private RepositorioDeMedicamento repMedicamento;
 
-	public void cadastrarMedicamento(MedicamentoDTO dadosMedicamento) {
-		repMedicamento.save(new Medicamento(dadosMedicamento));
+	public Medicamento cadastrarMedicamento(MedicamentoDTO dadosMedicamento) {
+		var medicamento =  new Medicamento(dadosMedicamento);
+		repMedicamento.save(medicamento);
+		
+		return medicamento;
 	}
 	
 	public List<Medicamento> listarTodos(){

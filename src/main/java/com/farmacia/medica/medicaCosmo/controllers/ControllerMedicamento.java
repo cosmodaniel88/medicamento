@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.farmacia.medica.medicaCosmo.DTOs.DadosAtualizacaoDTO;
 import com.farmacia.medica.medicaCosmo.DTOs.ListagemMedicamentosDTO;
@@ -32,9 +33,13 @@ public class ControllerMedicamento {
 	//método para cadastrar medicamentos
 	@PostMapping
 	@Transactional //faz o rollback em caso de erros
-	public ResponseEntity<Void> cadastrar(@RequestBody @Valid MedicamentoDTO dados) {
-		servMedicamento.cadastrarMedicamento(dados);
+	public ResponseEntity<DadosAtualizacaoDTO> cadastrar(@RequestBody @Valid MedicamentoDTO dados, UriComponentsBuilder uriBuilder) {
 		
+		var medicamento  = servMedicamento.cadastrarMedicamento(dados);
+		
+		var uri = uriBuilder.path("/medicamentos/{id}").buildAndExpand(medicamento.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(new DadosAtualizacaoDTO(medicamento));
 	}
 	/* */
 	@GetMapping
