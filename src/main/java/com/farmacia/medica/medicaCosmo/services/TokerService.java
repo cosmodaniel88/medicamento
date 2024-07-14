@@ -10,25 +10,37 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.farmacia.medica.medicaCosmo.entities.Usuario;
 
 @Service
 public class TokerService {
 //implementação JWT
-	
+
 	@Value("${api.security.token.secret}")
 	private String secret;
-	
+
 	public String gerarToken(Usuario usuario) {
 		try {
 			var algorithm = Algorithm.HMAC256(secret);
-			return JWT.create().withIssuer("Medicamentos_Api")
-			.withSubject(usuario.getLogin())
-			.withClaim("id", usuario.getId())
-			.withExpiresAt(dataExpiracao())
-			.sign(algorithm);
+			return JWT.create().withIssuer("Medicamentos_Api").withSubject(usuario.getLogin())
+					.withClaim("id", usuario.getId()).withExpiresAt(dataExpiracao()).sign(algorithm);
 		} catch (JWTCreationException exception) {
-			throw new RuntimeException("Erro ao gerar o token", exception);
+			throw new RuntimeException("Erro ao gerar o token");
+		}
+	}
+
+	public String getSubject(String tokenJwt) {
+		try {
+			var algorithm = Algorithm.HMAC256(secret);
+			return JWT.require(algorithm)
+					.withIssuer("Medicamentos_Api")
+					.build()
+					.verify(tokenJwt)
+					.getSubject();
+
+		} catch (JWTVerificationException exception) {
+			throw new RuntimeException("Token Inválido ou Expirado");
 		}
 	}
 

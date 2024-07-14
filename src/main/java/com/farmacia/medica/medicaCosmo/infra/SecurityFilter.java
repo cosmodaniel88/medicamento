@@ -2,8 +2,11 @@ package com.farmacia.medica.medicaCosmo.infra;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.farmacia.medica.medicaCosmo.services.TokerService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,14 +21,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
-
+	
+	@Autowired
+	private TokerService tokenService; /*Nome da classe errado*/
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
 		var tokenJwt = recuperarToken(request);
 		
-		System.out.println(tokenJwt);
+		var subject = tokenService.getSubject(tokenJwt);
 		
 		filterChain.doFilter(request, response);
 
