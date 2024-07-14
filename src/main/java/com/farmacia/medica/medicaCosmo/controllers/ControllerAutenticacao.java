@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farmacia.medica.medicaCosmo.DTOs.DadosAutenticacao;
+import com.farmacia.medica.medicaCosmo.DTOs.DadosTokenJWT;
+import com.farmacia.medica.medicaCosmo.entities.Usuario;
+import com.farmacia.medica.medicaCosmo.services.TokerService;
 
 import jakarta.validation.Valid;
 
@@ -20,11 +23,16 @@ public class ControllerAutenticacao {
 	@Autowired
 	private AuthenticationManager manager;
 	
+	@Autowired
+	private TokerService tokenService;
+	
 	@PostMapping
 	public ResponseEntity<?> efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
 		var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
 		var autenticacao = manager.authenticate(token);
 		
-		return ResponseEntity.ok().build();
+		var tkJwt = tokenService.gerarToken( (Usuario) autenticacao.getPrincipal());
+		
+		return ResponseEntity.ok(new DadosTokenJWT(tkJwt));
 	}
 }
